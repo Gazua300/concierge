@@ -4,7 +4,7 @@ import { GlobalState } from "./src/global/Context"
 import Perfil from 'react-native-vector-icons/Ionicons'
 import Logout from 'react-native-vector-icons/AntDesign'
 import List from 'react-native-vector-icons/FontAwesome'
-import { Touchable, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, StatusBar } from 'react-native'
 import Login from "./src/pages/login/Login"
 import CreateClient from "./src/pages/createClient/CreateClient"
 import Home from "./src/pages/home/Home"
@@ -21,10 +21,15 @@ const Stack = createNativeStackNavigator()
 export default function App() {
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor='rgba(0, 0, 0, 0.9)'/>
       <GlobalState>
         <Stack.Navigator
           screenOptions={{
-            headerTitleAlign: 'center'
+            headerTitleAlign: 'center',
+            headerStyle:{
+              backgroundColor: '#ae8625',                      
+            },
+            headerTintColor: 'whitesmoke',
           }}>
 
           <Stack.Screen
@@ -48,12 +53,12 @@ export default function App() {
               title: 'Clientes e pedidos',
               headerLeft: ()=>(
                 <TouchableOpacity onPress={()=> navigation.navigate('Produtos')}>
-                  <List name="list-alt" size={30}/>
+                  <List name="list-alt" size={30} color='whitesmoke'/>
                 </TouchableOpacity>
               ),
               headerRight: ()=> (
                 <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
-                  <Perfil name='person' size={30}/>
+                  <Perfil name='person' size={30} color='whitesmoke'/>
                 </TouchableOpacity>
               )
             })}
@@ -66,7 +71,7 @@ export default function App() {
               title: 'Produtos',
               headerRight: ()=>(
                 <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
-                  <Perfil name="person" size={30}/>
+                  <Perfil name="person" size={30} color='whitesmoke'/>
                 </TouchableOpacity>
               )
             })}/>
@@ -78,7 +83,7 @@ export default function App() {
             title: 'Seu perfil',
             headerRight: ()=>(
               <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
-                <Logout name='logout' size={30}/>
+                <Logout name='logout' size={30} color='whitesmoke'/>
               </TouchableOpacity>
             )
           })}/>
