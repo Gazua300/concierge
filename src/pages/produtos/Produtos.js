@@ -12,7 +12,7 @@ const Produtos = (props)=>{
     const { states, requests } = useContext(Context)
     const itens = states.itens
 
-  console.log('kd o token:', states.token)  
+  
     useEffect(()=>{
         requests.produtos()
     }, [])
@@ -40,8 +40,10 @@ const Produtos = (props)=>{
     return(
         <ScrollView>
             <View style={styles.container}>
-            <Text style={styles.title}>Inserir Produto</Text>
             
+            <Text style={styles.title}>Inserir Produto</Text>
+            <View style={styles.inputContainer}>
+           
             <TextInput style={styles.input}
                 onChangeText={setNome}
                 value={nome}
@@ -52,6 +54,7 @@ const Produtos = (props)=>{
                 multiline={true}
                 placeholder='Ingredientes, variedades ou marcas'/>
             
+            
             <View style={styles.btnContainer}>
                 <TouchableOpacity style={styles.button}
                     onPress={inserirProduto}>
@@ -61,6 +64,8 @@ const Produtos = (props)=>{
                     onPress={limpar}>
                     <Text style={{color:'whitesmoke'}}>Limpar</Text>
                 </TouchableOpacity>
+            </View>
+
             </View>
 
             <Text style={{
@@ -92,25 +97,29 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         textAlign: 'center',
-        margin: 30
+        margin: 20
+    },
+    inputContainer: {
+        alignItems: 'center',
+        marginBottom: 30
     },
     input: {
         backgroundColor: 'lightgray',
         borderRadius: 10,
         padding: 10,
         fontSize: 20,
-        marginLeft: 20,
         width: 300,
-        height: 40
+        height: 40,
+        marginBottom: 10
     },
     textarea: {
         backgroundColor: 'lightgray',
         borderRadius: 10,
         padding: 10,
         fontSize: 20,
-        margin: 20,
         width: 300,
-        height: 80
+        height: 80,
+        marginBottom: 20
     },
     card: {
         display: 'flex',
@@ -127,16 +136,15 @@ const styles = StyleSheet.create({
     btnContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 20
     },
     button: {
         backgroundColor: 'blue',
         width: 100,
         padding: 5,
         borderRadius: 10,
-        marginTop: 15,
+        marginStart: 50,
+        marginEnd: 50,
         alignItems: 'center'
     }
 })

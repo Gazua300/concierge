@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import Context from '../../global/Context'
-import axios from 'axios'
-import { url } from '../../constants/url'
+import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 
@@ -21,9 +20,9 @@ const Home = (props)=>{
             
     
     return(
-        <ScrollView>
+        <ScrollView>        
            {clientes.length > 0 ? clientes.map(cliente=>{
-            return(
+            return(                                   
                 <View key={cliente.id}
                     style={styles.card}>
                     <View>
@@ -58,8 +57,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderWidth: 1,
         margin: 15,
-        padding: 15,
-        borderRadius: 10,
+        padding: 20,
+        borderRadius: 10
     },
     txtStyle: {
         fontSize: 20,
