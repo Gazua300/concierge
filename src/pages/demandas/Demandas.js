@@ -7,7 +7,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 const Demandas = (props)=>{
     const { states } = useContext(Context)
     const pedidos = states.pedidos
-
+console.log(pedidos)
 
     return(
         <View>

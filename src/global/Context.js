@@ -10,9 +10,8 @@ const Context = createContext()
 export const GlobalState = (props)=>{
     const [token, setToken] = useState('')
     const [clientes, setClientes] = useState([])
-    const [pedidos, setPedidos] = useState([])
     const [place, setPlace] = useState({})
- console.log(clientes)   
+ console.log('Clientes:', clientes) 
         
     // const getToken = async(tk)=>{
     //     try{
@@ -43,8 +42,8 @@ export const GlobalState = (props)=>{
     }
 
 
-    const states = { clientes, pedidos, place }
-    const setters = { setToken, setPedidos }
+    const states = { clientes, place }
+    const setters = { setToken }
     const requests = { clientsByPlace, getPlace }
 
     return(

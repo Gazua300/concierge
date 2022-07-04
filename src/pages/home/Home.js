@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Context from '../../global/Context'
 import axios from 'axios'
 import { url } from '../../constants/url'
@@ -6,7 +6,9 @@ import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-nati
 
 
 
+
 const Home = (props)=>{
+    const [atendido, setAtendido] = useState(false)
     const { requests, states, setters } = useContext(Context)
     const clientes = states.clientes
 
@@ -16,17 +18,7 @@ const Home = (props)=>{
     }, [])
 
 
-
-    const demandas = (id)=>{
-        axios.get(`${url}/requests/${id}`).then(res=>{
-            setters.setPedidos(res.data)
-            props.navigation.navigate('Demandas')
-        }).catch(e=>{
-            alert(e.response.data)
-        })
-    }
-
-    
+            
     
     return(
         <ScrollView>
@@ -34,14 +26,23 @@ const Home = (props)=>{
             return(
                 <View key={cliente.id}
                     style={styles.card}>
-                    <Text style={styles.txtStyle}>
-                        {cliente.clienteNome}{'\n'}
-                        Mesa: {cliente.mesa}
-                    </Text>
-                    <TouchableOpacity style={styles.button}
-                        onPress={()=> demandas(cliente.id)}>
-                        <Text style={{color:'whitesmoke'}}>Pedidos</Text>
-                    </TouchableOpacity>
+                    <View>
+                        <Text style={styles.txtStyle}>
+                            {cliente.clienteNome}
+                        </Text>
+                        <Text style={{fontSize:18}}>
+                            {cliente.pedido}
+                        </Text>
+                        <Text style={{fontSize:18, marginTop:5}}>Feito as {cliente.ordem}</Text>
+                    </View>
+                    <View style={styles.btnContainer}>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={{color:'whitesmoke'}}>Atender</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={{color:'whitesmoke'}}>Remover</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )            
            }) : <Text style={styles.txtTemp}>Você está sem clientes no momento</Text>}
@@ -53,21 +54,29 @@ const Home = (props)=>{
 const styles = StyleSheet.create({
     card: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
-        alignItems: 'center',
         borderWidth: 1,
         margin: 15,
         padding: 15,
-        borderRadius: 10
+        borderRadius: 10,
     },
     txtStyle: {
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'blue',
+        marginBottom: 20                
     },
     txtTemp: {
         marginTop: 100,
         textAlign: 'center',
         fontSize: 20
+    },
+    btnContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     button: {
         backgroundColor: 'blue',
