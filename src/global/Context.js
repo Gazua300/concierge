@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
-// import AsyncStorage from '@react-native-async-storage/async-storage'
 import { url } from "../constants/url"
 
 
@@ -11,18 +11,19 @@ export const GlobalState = (props)=>{
     const [token, setToken] = useState('')
     const [clientes, setClientes] = useState([])
     const [place, setPlace] = useState({})
- console.log('Clientes:', clientes) 
-        
-    // const getToken = async(tk)=>{
-    //     try{
-    //         await AsyncStorage.setItem('token', tk)
-    //         const value = await AsyncStorage.get('token')
-    //         //setToken(value)
-    //     }catch(e){
-    //         alert(e)
-    //     }
-    // }
+    const [itens, setItens] = useState([])
+
     
+
+    const getToken = async(tk)=>{
+        try{
+            await AsyncStorage.setItem('token', tk)
+            const value = await AsyncStorage.getItem('token')
+            setToken(value)
+        }catch(e){
+            alert(e)
+        }
+    }
     
     const clientsByPlace = ()=>{
         axios.get(`${url}/place/${token}`).then(res=>{
@@ -42,9 +43,18 @@ export const GlobalState = (props)=>{
     }
 
 
-    const states = { clientes, place }
-    const setters = { setToken }
-    const requests = { clientsByPlace, getPlace }
+    const produtos = ()=>{
+        axios.get(`${url}/cardapio/place/${token}`).then(res=>{
+            setItens(res.data)
+        }).catch(e=>{
+            alert(e.response.data)
+        })
+    }
+
+
+    const states = { clientes, place, itens, token }
+    const setters = { setToken, getToken }
+    const requests = { clientsByPlace, getPlace, produtos }
 
     return(
         <Context.Provider value={{ states, setters, requests }}>

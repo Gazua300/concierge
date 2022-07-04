@@ -3,11 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { GlobalState } from "./src/global/Context"
 import Perfil from 'react-native-vector-icons/Ionicons'
 import Logout from 'react-native-vector-icons/AntDesign'
-import { TouchableOpacity, View } from 'react-native'
+import List from 'react-native-vector-icons/FontAwesome'
+import { Touchable, TouchableOpacity, View } from 'react-native'
 import Login from "./src/pages/login/Login"
 import CreateClient from "./src/pages/createClient/CreateClient"
 import Home from "./src/pages/home/Home"
-import Demandas from "./src/pages/demandas/Demandas"
+import Produtos from "./src/pages/produtos/Produtos"
 import Profile from './src/pages/profile/Profile'
 
 
@@ -44,8 +45,11 @@ export default function App() {
             name="Home"
             component={Home}
             options={({navigation})=>({
+              title: 'Clientes e pedidos',
               headerLeft: ()=>(
-                <View/>
+                <TouchableOpacity onPress={()=> navigation.navigate('Produtos')}>
+                  <List name="list-alt" size={30}/>
+                </TouchableOpacity>
               ),
               headerRight: ()=> (
                 <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
@@ -56,10 +60,10 @@ export default function App() {
             />
 
         <Stack.Screen
-            name="Demandas"
-            component={Demandas}
+            name="Produtos"
+            component={Produtos}
             options={({navigation})=>({
-              title: 'Lista de pedidos',
+              title: 'Produtos',
               headerRight: ()=>(
                 <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
                   <Perfil name="person" size={30}/>
