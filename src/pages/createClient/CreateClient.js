@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import Context from "../../global/Context"
 import axios from 'axios'
 import { url } from "../../constants/url"
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground } from "react-native"
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, ScrollView } from "react-native"
 
 
 const CreateClient = (props)=>{
@@ -52,6 +52,7 @@ const CreateClient = (props)=>{
             style={{flex:1}}
             source={require('../../img/login-wallpaper.jpg')}>
             <View style={styles.container}>
+                <ScrollView>
                     <TextInput style={styles.input}
                         onChangeText={setNome}
                         value={nome}
@@ -99,6 +100,7 @@ const CreateClient = (props)=>{
                             <Text style={{color:'whitesmoke', fontSize:20}}>Limpar</Text>
                         </TouchableOpacity>
                     </View>
+                </ScrollView>
             </View>
         </ImageBackground>
     )

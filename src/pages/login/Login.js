@@ -50,7 +50,7 @@ const Login = (props)=>{
                     <Text style={{color:'whitesmoke', fontSize:20}}>Entrar</Text>
                 </TouchableOpacity>
                 <Text style={styles.txtStyle}>Ainda não tem cadastro? Clique
-                    <Text style={{color:'blue'}}
+                    <Text style={{color:'blue', fontSize:20}}
                         onPress={()=> props.navigation.navigate('CreateClient')}> aqui</Text>
                 </Text>
             </View>

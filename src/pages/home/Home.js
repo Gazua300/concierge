@@ -67,9 +67,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderWidth: 2,
         borderColor: '#ae8625',
+        borderRadius:10,
         margin: 15,
         padding: 20,
-        borderRadius: 10,
     },
     txtStyle: {
         fontSize: 20,
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     },
     txtTemp: {
         marginTop: 100,
+        marginHorizontal: 50,
         textAlign: 'center',
         fontSize: 20,
         color: 'whitesmoke'

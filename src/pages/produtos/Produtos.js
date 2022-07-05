@@ -25,7 +25,6 @@ const Produtos = (props)=>{
         }
         axios.post(`${url}/cardapio/${states.token}`, body).then(res=>{
             alert(res.data)
-            // requests.produto()
         }).catch(e=>{
             alert(e.response.data)
         })
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#ae8625',
+        borderColor: '#ae8625'
     },
     txtStyle: {
         fontSize: 20,
