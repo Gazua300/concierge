@@ -52,9 +52,18 @@ export const GlobalState = (props)=>{
     }
 
 
+    const deletePedido = (id)=>{
+        axios.delete(`${url}/request/${id}`).then(res=>{
+            clientsByPlace()
+        }).catch(e=>{
+            alert(e.response.data)
+        })
+    }
+
+
     const states = { clientes, place, itens, token }
     const setters = { setToken, getToken }
-    const requests = { clientsByPlace, getPlace, produtos }
+    const requests = { clientsByPlace, getPlace, produtos, deletePedido }
 
     return(
         <Context.Provider value={{ states, setters, requests }}>

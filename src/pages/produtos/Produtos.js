@@ -61,11 +61,11 @@ const Produtos = (props)=>{
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
                             onPress={inserirProduto}>
-                            <Text style={{color:'whitesmoke'}}>Registrar</Text>
+                            <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button}
                             onPress={limpar}>
-                            <Text style={{color:'whitesmoke'}}>Limpar</Text>
+                            <Text style={{color:'whitesmoke', fontSize:15}}>Limpar</Text>
                         </TouchableOpacity>
                     </View>
 

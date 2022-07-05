@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import Context from '../../global/Context'
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 
 
 
@@ -16,7 +16,23 @@ const Home = (props)=>{
     }, [])
 
 
-            
+
+    const remover = (id)=>{
+        Alert.alert(
+            'Alerta',
+            `Tem certeza que deseja excluir o pedido?\nVerfique se o mesmo já foi atendido.`,
+            [
+                {
+                    text:'Cancelar',                                        
+                },
+                {
+                    text:'Ok',
+                    onPress: ()=> requests.deletePedido(id)
+                }
+            ]
+        )
+    }
+    
     
     return(
         <ImageBackground
@@ -35,14 +51,12 @@ const Home = (props)=>{
                                     <Text style={{fontSize:18, color:'whitesmoke'}}>
                                         {cliente.pedido}
                                     </Text>
-                                    <Text style={{fontSize:18, marginTop:5, color:'whitesmoke'}}>Feito as {cliente.ordem}</Text>
+                                    <Text style={{fontSize:18, marginTop:10, color:'whitesmoke'}}>Feito as {cliente.ordem}</Text>
                                 </View>
-                                <View style={styles.btnContainer}>
-                                    <TouchableOpacity style={styles.button}>
-                                        <Text style={{color:'whitesmoke'}}>Atender</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.button}>
-                                        <Text style={{color:'whitesmoke'}}>Remover</Text>
+                                <View style={styles.btnContainer}>                                    
+                                    <TouchableOpacity style={styles.button}
+                                        onPress={()=> remover(cliente.id)}>
+                                        <Text style={{color:'whitesmoke', fontSize:15}}>Remover</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -85,14 +99,11 @@ const styles = StyleSheet.create({
         color: 'whitesmoke'
     },
     btnContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
     button: {
         backgroundColor: '#ae8625',
-        width: 100,
+        width: 150,
         padding: 5,
         borderRadius: 10,
         marginTop: 15,
