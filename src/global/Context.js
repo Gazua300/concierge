@@ -8,25 +8,25 @@ const Context = createContext()
 
 
 export const GlobalState = (props)=>{
-    const [token, setToken] = useState('')
-    const [clientes, setClientes] = useState([])
     const [place, setPlace] = useState({})
+    const [clientes, setClientes] = useState([])    
     const [itens, setItens] = useState([])
+    const [show, setShow] = useState(false)
 
     
 
     const getToken = async(tk)=>{
         try{
             await AsyncStorage.setItem('token', tk)
-            const value = await AsyncStorage.getItem('token')
-            setToken(value)
         }catch(e){
             alert(e)
         }
     }
     
-    const clientsByPlace = ()=>{
-        axios.get(`${url}/place/${token}`).then(res=>{
+    const clientsByPlace = async()=>{
+        const id = await AsyncStorage.getItem('token')
+
+        axios.get(`${url}/place/${id}`).then(res=>{
             setClientes(res.data)
         }).catch(e=>{
             alert(e.response.data)
@@ -34,17 +34,11 @@ export const GlobalState = (props)=>{
     }
 
 
-    const getPlace = ()=>{
-        axios.get(`${url}/client/${token}`).then(res=>{
-            setPlace(res.data)
-        }).catch(e=>{
-            alert(e.response.data)
-        })
-    }
+    
+    const produtos = async()=>{
+        const id = await AsyncStorage.getItem('token')
 
-
-    const produtos = ()=>{
-        axios.get(`${url}/cardapio/place/${token}`).then(res=>{
+        axios.get(`${url}/cardapio/place/${id}`).then(res=>{
             setItens(res.data)
         }).catch(e=>{
             alert(e.response.data)
@@ -61,9 +55,21 @@ export const GlobalState = (props)=>{
     }
 
 
-    const states = { clientes, place, itens, token }
-    const setters = { setToken, getToken }
-    const requests = { clientsByPlace, getPlace, produtos, deletePedido }
+    const getPlace = async()=>{
+        const id = await AsyncStorage.getItem('token')
+
+        axios.get(`${url}/client/${id}`).then(res=>{
+            setPlace(res.data)
+        }).catch(e=>{
+            alert(e.response.data)
+        })
+    }
+
+
+
+    const states = { clientes, itens, place, show }
+    const setters = { getToken, setShow }
+    const requests = { clientsByPlace, produtos, deletePedido, getPlace }
 
     return(
         <Context.Provider value={{ states, setters, requests }}>

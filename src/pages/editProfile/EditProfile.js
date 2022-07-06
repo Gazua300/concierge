@@ -1,41 +1,62 @@
-import { useContext, useState } from "react"
-import Context from "../../global/Context"
+import { useContext, useState } from 'react'
+import Context from '../../global/Context'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import { url } from "../../constants/url"
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, ScrollView } from "react-native"
+import { url } from '../../constants/url'
+import { View,
+    Text,
+    ImageBackground,
+    StyleSheet,
+    Alert,
+    ScrollView,
+    TextInput,
+    TouchableOpacity
+} from 'react-native'
 
 
-const CreateClient = (props)=>{
-    const { setters } = useContext(Context)
+
+const EditProfile = (props)=>{
+    const { requests } = useContext(Context)
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
-    const [confSenha, setConfSenha] = useState('')
     const [servico, setServico] = useState('')
     const [responsavel, setResponsavel] = useState('')
     const [mesas, setMesas] = useState('')
 
 
 
-    const signUp = ()=>{
-        const body={
+    const atualizar = async()=>{
+        const id = await AsyncStorage.getItem('token')
+        const body = {
             nome,
             email,
-            senha,
             servico,
-            mesas,
-            responsavel
+            responsavel,
+            mesas
         }
-        if(senha !== confSenha){
-            alert('As senhas não correspondem')
-        }else{
-            axios.post(`${url}/client`, body).then(res=>{
-                setters.getToken(res.data)
-                props.navigation.navigate('Home')
-            }).catch(e=>{
-                alert(e.response.data)
-            })
-        }
+        axios.put(`${url}/client/${id}`, body).then(res=>{
+            props.navigation.navigate('Profile')
+            requests.getPlace()
+        }).catch(e=>{
+            alert(e.response.data)
+        })
+    }
+
+
+    const confirmar = ()=>{
+        Alert.alert(
+            'Alerta',
+            'Tem certeza que deseja alterar seus dados?',
+            [
+                {
+                    text:'Cancelar'
+                },
+                {
+                    text:'Ok',
+                    onPress: ()=> atualizar()
+                }
+            ]
+        )
     }
 
 
@@ -68,20 +89,6 @@ const CreateClient = (props)=>{
                         placeholderTextColor='whitesmoke'/>
 
                     <TextInput style={styles.input}
-                        onChangeText={setSenha}
-                        value={senha}
-                        secureTextEntry={true}
-                        placeholder='Sua senha'
-                        placeholderTextColor='whitesmoke'/>
-                    
-                    <TextInput style={styles.input}
-                        onChangeText={setConfSenha}
-                        value={confSenha}
-                        secureTextEntry={true}
-                        placeholder='Confirme sua senha'
-                        placeholderTextColor='whitesmoke'/>
-
-                    <TextInput style={styles.input}
                         onChangeText={setServico}
                         value={servico}
                         placeholder="Serviço oferecido"
@@ -102,8 +109,8 @@ const CreateClient = (props)=>{
                     
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
-                            onPress={signUp}>
-                            <Text style={{color:'whitesmoke', fontSize:20}}>Registrar</Text>
+                            onPress={confirmar}>
+                            <Text style={{color:'whitesmoke', fontSize:20}}>Salvar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button}
                             onPress={limpar}>
@@ -116,17 +123,16 @@ const CreateClient = (props)=>{
     )
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        alignItems: 'center',
         paddingTop: 50
     },
     input: {
         borderRadius: 10,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#ae8625',
         paddingLeft: 15,
         fontSize: 20,
@@ -154,5 +160,4 @@ const styles = StyleSheet.create({
     }
 })
 
-
-export default CreateClient
+export default EditProfile

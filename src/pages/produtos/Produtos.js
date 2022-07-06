@@ -1,6 +1,15 @@
 import { useContext, useEffect, useState } from "react"
 import Context from "../../global/Context"
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground } from 'react-native'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { ScrollView,
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    TextInput,
+    ImageBackground,
+    Alert
+} from 'react-native'
 import axios from "axios"
 import { url } from "../../constants/url"
 
@@ -18,13 +27,16 @@ const Produtos = (props)=>{
     }, [])
     
 
-    const inserirProduto = ()=>{
+    const inserirProduto = async()=>{
+        const id = await AsyncStorage.getItem('token')
+
         const body = {
             nome,
             ingredientes: ingrediente
         }
-        axios.post(`${url}/cardapio/${states.token}`, body).then(res=>{
+        axios.post(`${url}/cardapio/${id}`, body).then(res=>{
             alert(res.data)
+            requests.produtos()
         }).catch(e=>{
             alert(e.response.data)
         })
@@ -35,59 +47,90 @@ const Produtos = (props)=>{
         setNome('')
         setIngrediente('')
     }
+
+
+    const removerProduto = (id)=>{
+        axios.delete(`${url}/cardapio/${id}`).then(res=>{
+            console.log(res.data)
+            requests.produtos()
+        }).catch(e=>{
+            alert(e.response.data)
+        })
+    }
+
+    const removeConf = (id)=>{
+        Alert.alert(
+            'Alerta',
+            'Tem certeza que deseja excluir o produto?',
+            [
+                {
+                    text:'Cancelar'
+                },
+                {
+                    text:'Ok',
+                    onPress: ()=> removerProduto(id)
+                }
+            ]
+        )
+    }
     
     return(
         <ImageBackground
             style={{flex:1}}
             source={require('../../img/login-wallpaper.jpg')}>
             <View style={styles.container}>
-                <ScrollView>                
-                    <Text style={styles.title}>Inserir Produto</Text>
-                    <View style={styles.inputContainer}>
+                <Text style={styles.title}>Inserir Produto</Text>
+                <View style={styles.inputContainer}>
+            
+                <TextInput style={styles.input}
+                    onChangeText={setNome}
+                    value={nome}
+                    placeholder='Produto'
+                    placeholderTextColor='whitesmoke'/>            
+                <TextInput style={styles.textarea}
+                    onChangeText={setIngrediente}
+                    value={ingrediente}
+                    multiline={true}
+                    placeholder='Ingredientes, variedades ou marcas'
+                    placeholderTextColor='whitesmoke'/>
                 
-                    <TextInput style={styles.input}
-                        onChangeText={setNome}
-                        value={nome}
-                        placeholder='Produto'
-                        placeholderTextColor='whitesmoke'/>            
-                    <TextInput style={styles.textarea}
-                        onChangeText={setIngrediente}
-                        value={ingrediente}
-                        multiline={true}
-                        placeholder='Ingredientes, variedades ou marcas'
-                        placeholderTextColor='whitesmoke'/>
-                    
-                    
-                    <View style={styles.btnContainer}>
-                        <TouchableOpacity style={styles.button}
-                            onPress={inserirProduto}>
-                            <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}
-                            onPress={limpar}>
-                            <Text style={{color:'whitesmoke', fontSize:15}}>Limpar</Text>
-                        </TouchableOpacity>
-                    </View>
+                
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.button}
+                        onPress={inserirProduto}>
+                        <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button}
+                        onPress={limpar}>
+                        <Text style={{color:'whitesmoke', fontSize:15}}>Limpar</Text>
+                    </TouchableOpacity>
+                </View>
 
-                    </View>
+                </View>
 
-                    <Text style={{
-                        fontSize: 25,
-                        textAlign: 'center',
-                        margin: 10,
-                        color: 'whitesmoke'
-                    }}>Lista</Text>
-                    <View style={{borderWidth:1, marginHorizontal:5, borderColor:'#ae8625'}}/>
-                    
-                    {itens && itens.map(item=>{
+                <Text style={{
+                    fontSize: 25,
+                    textAlign: 'center',
+                    margin: 10,
+                    color: 'whitesmoke'
+                }}>Lista</Text>
+                <View style={{borderWidth:1, marginHorizontal:5, borderColor:'#ae8625'}}/>
+                <ScrollView>
+                    {itens.length > 0 ? itens.map(item=>{
                         return(
                             <View key={item.id}
                                 style={styles.card}>
                                 <Text style={styles.txtStyle}>{item.nome}</Text>
                                 <Text style={{fontSize:15, color:'whitesmoke'}}>{item.ingredientes}</Text>
-                            </View>
+                                <TouchableOpacity style={styles.remove}
+                                    onPress={()=> removeConf(item.id)}>
+                                    <Text style={{fontSize:15, color:'whitesmoke'}}>
+                                        Remover
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>                            
                         )
-                    })}
+                    }) : <Text style={styles.textTemp}>Você ainda não registrou nenhum produto</Text>}
                 </ScrollView>
             </View>
         </ImageBackground>
@@ -162,6 +205,19 @@ const styles = StyleSheet.create({
         marginStart: 70,
         marginEnd: 70,
         alignItems: 'center'
+    },
+    remove: {
+        backgroundColor: '#ae8625',
+        padding: 5,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 10
+    },
+    textTemp: {
+        color: 'whitesmoke',
+        textAlign: 'center',
+        fontSize: 20,
+        margin: 30
     }
 })
 

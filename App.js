@@ -2,14 +2,17 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { GlobalState } from "./src/global/Context"
 import Perfil from 'react-native-vector-icons/Ionicons'
-import Logout from 'react-native-vector-icons/AntDesign'
+import HomeIcon from 'react-native-vector-icons/Entypo'
 import List from 'react-native-vector-icons/FontAwesome'
+import Back from 'react-native-vector-icons/AntDesign'
 import { TouchableOpacity, StatusBar } from 'react-native'
 import Login from "./src/pages/login/Login"
 import CreateClient from "./src/pages/createClient/CreateClient"
 import Home from "./src/pages/home/Home"
 import Produtos from "./src/pages/produtos/Produtos"
 import Profile from './src/pages/profile/Profile'
+import EditProfile from "./src/pages/editProfile/EditProfile"
+import Auth from "./src/pages/auth/Auth"
 
 
 
@@ -82,11 +85,31 @@ export default function App() {
           options={({navigation})=> ({
             title: 'Seu perfil',
             headerRight: ()=>(
-              <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
-                <Logout name='logout' size={30} color='whitesmoke'/>
+              <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
+                <HomeIcon name='home' size={30} color='whitesmoke'/>
               </TouchableOpacity>
             )
           })}/>
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={({navigation})=>({
+            title: 'Atualizar perfil',
+            headerLeft: ()=>(
+              <TouchableOpacity
+                onPress={()=> navigation.navigate('Profile')}>
+                <Back name="arrowleft" size={25} color='whitesmoke'/>
+              </TouchableOpacity>
+            )
+          })} />
+        
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={({navigation})=>({
+            title: 'Autenticação'
+          })} />
 
         </Stack.Navigator>
       </GlobalState>
