@@ -71,6 +71,41 @@ const EditProfile = (props)=>{
     }
 
 
+    const logout = async()=>{
+        try{
+            await AsyncStorage.clear()
+        }catch(e){
+            alert(e)
+        }
+    }
+
+    const delAccount = async()=>{
+        const id = await AsyncStorage.getItem('token')
+
+        axios.delete(`${url}/client/${id}`).then(res=>{
+            alert(res.data)
+            logout()
+            props.navigation.navigate('Login')
+        })
+    }
+
+    const confirmDel = ()=>{
+        Alert.alert(
+            'Atenção!',
+            'Esta operação também irá apagar todos os registros relacionados à sua conta. Deseja continuar?',
+            [
+                {
+                    text:'Cancelar'
+                },
+                {
+                    text:'Ok',
+                    onPress: ()=> delAccount()
+                }
+            ]
+        )
+    }
+
+
     return(
         <ImageBackground
             style={{flex:1}}
@@ -87,36 +122,38 @@ const EditProfile = (props)=>{
                         value={email}
                         placeholder="nome@email.com"
                         placeholderTextColor='whitesmoke'/>
-
                     <TextInput style={styles.input}
                         onChangeText={setServico}
                         value={servico}
                         placeholder="Serviço oferecido"
                         placeholderTextColor='whitesmoke'/>
-
                     <TextInput style={styles.input}
                         onChangeText={setMesas}
                         value={mesas}
                         placeholder='Contingência'
                         placeholderTextColor='whitesmoke'
                         keyboardType="numeric"/>
-
                     <TextInput style={styles.input}
                         onChangeText={setResponsavel}
                         value={responsavel}
                         placeholder="Nome do responsável"
-                        placeholderTextColor='whitesmoke'/>
-                    
+                        placeholderTextColor='whitesmoke'/>                    
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
                             onPress={confirmar}>
-                            <Text style={{color:'whitesmoke', fontSize:20}}>Salvar</Text>
+                            <Text style={{color:'whitesmoke', fontSize:18}}>Salvar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button}
                             onPress={limpar}>
-                            <Text style={{color:'whitesmoke', fontSize:20}}>Limpar</Text>
+                            <Text style={{color:'whitesmoke', fontSize:18}}>Limpar</Text>
                         </TouchableOpacity>
                     </View>
+                    <TouchableOpacity style={styles.btnDel}
+                        onPress={confirmDel}>
+                        <Text style={{color:'whitesmoke', fontSize:18}}>
+                            Deletar conta
+                        </Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         </ImageBackground>
@@ -145,13 +182,24 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection:'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20
     },
     button: {
         backgroundColor: '#ae8625',
         borderWidth: 1,
         borderColor: 'goldenrod',
         width: 150,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        margin: 15
+    },
+    btnDel: {
+        backgroundColor: '#ae8625',
+        borderWidth: 1,
+        borderColor: 'goldenrod',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',

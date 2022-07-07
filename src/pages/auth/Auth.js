@@ -16,7 +16,7 @@ import { View,
 
 const Auth = (props)=>{
     const { states, setters }  = useContext(Context)
-    const [senha,setSenha] = useState('')
+    const [senha, setSenha] = useState('')
 
 
     const auth = async()=>{

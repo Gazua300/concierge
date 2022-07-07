@@ -51,7 +51,9 @@ const Home = (props)=>{
                                         {cliente.pedido}{'\n'}
                                         Mesa {cliente.mesa}
                                     </Text>
-                                    <Text style={{fontSize:18, marginTop:10, color:'whitesmoke'}}>Feito as {cliente.ordem}</Text>
+                                    {/* <Text style={{fontSize:18, marginTop:10, color:'whitesmoke'}}>
+                                        Feito as {cliente.ordem}
+                                    </Text> */}
                                 </View>                                 
                                 <TouchableOpacity style={styles.button}
                                     onPress={()=> remover(cliente.id)}>

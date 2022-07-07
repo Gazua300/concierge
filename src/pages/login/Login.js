@@ -3,7 +3,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { url } from '../../constants/url'
 import Context from "../../global/Context"
 import axios from 'axios'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from "react-native"
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    ImageBackground,
+    ScrollView
+} from "react-native"
 
 
 
@@ -41,32 +49,51 @@ const Login = (props)=>{
     }
 
 
+    const limpar = ()=>{
+        setEmail('')
+        setSenha('')
+    }
+
+
     return(
         <ImageBackground
             style={{flex:1}}
             source={require('../../img/login-wallpaper.jpg')}>
             <View style={styles.container}>
-                <TextInput style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
-                    placeholderTextColor='whitesmoke'
-                    placeholder="nome@email.com"/>
+                <ScrollView>
+                    <TextInput style={styles.input}
+                        onChangeText={setEmail}
+                        value={email}
+                        placeholderTextColor='whitesmoke'
+                        placeholder="nome@email.com"/>
 
-                <TextInput style={styles.input}
-                    onChangeText={setSenha}
-                    value={senha}
-                    placeholderTextColor='whitesmoke'
-                    secureTextEntry={true}
-                    placeholder='Sua senha'/>
-                
-                <TouchableOpacity style={styles.button}
-                    onPress={login}>
-                    <Text style={{color:'whitesmoke', fontSize:20}}>Entrar</Text>
-                </TouchableOpacity>
-                <Text style={styles.txtStyle}>Ainda não tem cadastro? Clique
-                    <Text style={{color:'blue', fontSize:20}}
-                        onPress={()=> props.navigation.navigate('CreateClient')}> aqui</Text>
-                </Text>
+                    <TextInput style={styles.input}
+                        onChangeText={setSenha}
+                        value={senha}
+                        placeholderTextColor='whitesmoke'
+                        secureTextEntry={true}
+                        placeholder='Sua senha'/>
+                    
+                    <View style={styles.btnContainer}>
+                        <TouchableOpacity style={styles.button}
+                            onPress={login}>
+                            <Text style={{color:'whitesmoke', fontSize:20}}>
+                                Entrar
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}
+                            onPress={limpar}>
+                            <Text style={{color:'whitesmoke', fontSize:20}}>
+                                Limpar
+                            </Text>
+                        </TouchableOpacity>                    
+                    </View>
+                    
+                    <Text style={styles.txtStyle}>Ainda não tem cadastro? Clique
+                        <Text style={{color:'blue', fontSize:20}}
+                            onPress={()=> props.navigation.navigate('CreateClient')}> aqui</Text>
+                    </Text>
+                </ScrollView>
             </View>
         </ImageBackground>
     )
@@ -93,16 +120,21 @@ const styles = StyleSheet.create({
     },
     txtStyle:{
         fontSize: 20,
-        color: 'whitesmoke'
+        color: 'whitesmoke',
+        textAlign: 'center'
+    },
+    btnContainer: {
+        display: 'flex',
+        flexDirection: 'row',
     },
     button: {
         backgroundColor: '#ae8625',
         width: 150,
         height: 40,
+        margin: 20,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        margin: 15,
         borderWidth: 1,
         borderColor: 'goldenrod'
     }

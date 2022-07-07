@@ -80,32 +80,30 @@ const Produtos = (props)=>{
             source={require('../../img/login-wallpaper.jpg')}>
             <View style={styles.container}>
                 <Text style={styles.title}>Inserir Produto</Text>
-                <View style={styles.inputContainer}>
-            
-                <TextInput style={styles.input}
-                    onChangeText={setNome}
-                    value={nome}
-                    placeholder='Produto'
-                    placeholderTextColor='whitesmoke'/>            
-                <TextInput style={styles.textarea}
-                    onChangeText={setIngrediente}
-                    value={ingrediente}
-                    multiline={true}
-                    placeholder='Ingredientes, variedades ou marcas'
-                    placeholderTextColor='whitesmoke'/>
                 
-                
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity style={styles.button}
-                        onPress={inserirProduto}>
-                        <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}
-                        onPress={limpar}>
-                        <Text style={{color:'whitesmoke', fontSize:15}}>Limpar</Text>
-                    </TouchableOpacity>
-                </View>
-
+                <View style={styles.inputContainer}>            
+                    <TextInput style={styles.input}
+                        onChangeText={setNome}
+                        value={nome}
+                        placeholder='Produto'
+                        placeholderTextColor='whitesmoke'/>            
+                    <TextInput style={styles.textarea}
+                        onChangeText={setIngrediente}
+                        value={ingrediente}
+                        multiline={true}
+                        placeholder='Ingredientes, variedades ou marcas'
+                        placeholderTextColor='whitesmoke'/>
+                                    
+                    <View style={styles.btnContainer}>
+                        <TouchableOpacity style={styles.button}
+                            onPress={inserirProduto}>
+                            <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}
+                            onPress={limpar}>
+                            <Text style={{color:'whitesmoke', fontSize:15}}>Limpar</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <Text style={{

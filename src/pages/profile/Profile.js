@@ -48,7 +48,7 @@ const Profile = (props)=>{
             style={{flex:1}}
             source={require('../../img/login-wallpaper.jpg')}>
             <View style={styles.container}>
-                {states.show === true ? <Auth/> : null}
+                
                 <View style={styles.perfilContainer}>
                     <Text style={styles.title}>{place.nome}</Text>
                     <Text style={styles.txtStyle}>
@@ -58,6 +58,7 @@ const Profile = (props)=>{
                         Contingente: {place.mesas} mesas
                     </Text>
                 </View>                
+                
                 <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.button}
                         onPress={confirmarLogout}>
@@ -72,6 +73,7 @@ const Profile = (props)=>{
                         </Text>
                     </TouchableOpacity>
                 </View>
+           
             </View>
         </ImageBackground>
     )
