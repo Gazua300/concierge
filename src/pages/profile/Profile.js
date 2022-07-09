@@ -9,6 +9,10 @@ import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert } from
 const Profile = (props)=>{
     const { states, requests } = useContext(Context)
     const place = states.place
+    const ddd = String(place.contato).substring(0,2)
+    const prefixo = String(place.contato).substring(2,6)
+    const sufixo = String(place.contato).substring(6,10)
+    const telefone = `(${ddd}) ${prefixo}-${sufixo}`
 
 
     useEffect(()=>{
@@ -52,10 +56,13 @@ const Profile = (props)=>{
                 <View style={styles.perfilContainer}>
                     <Text style={styles.title}>{place.nome}</Text>
                     <Text style={styles.txtStyle}>
-                        Email: {place.email}{'\n'}
-                        Serviço: {place.servico}{'\n'}
-                        Responsável: {place.responsavel}{'\n'}
-                        Contingente: {place.mesas} mesas
+                        {place.email}{'\n'}
+                        {place.servico}{'\n'}
+                        {place.mesas} mesas{'\n'}
+                    </Text>
+                    <Text style={styles.localContainer}>
+                        {place.endereco}{'\n'}
+                        {telefone}
                     </Text>
                 </View>                
                 
@@ -82,23 +89,26 @@ const Profile = (props)=>{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        // paddingTop: 50 
+        backgroundColor: 'rgba(0, 0, 0, 0.8)'
     },
     perfilContainer: {
-        
+        margin: 20
     },
     title: {
         fontSize: 30,
-        margin: 20,
+        marginBottom: 20,
         color: 'whitesmoke',
+        textAlign: 'center'
     },
     txtStyle: {
-        marginLeft: 20,
-        marginBottom: 30,
         fontSize: 20,
         lineHeight: 30,
         color: 'whitesmoke',
+    },
+    localContainer: {
+        color: 'whitesmoke',
+        fontSize: 20,
+        lineHeight: 30
     },
     btnContainer: {
         display: 'flex',

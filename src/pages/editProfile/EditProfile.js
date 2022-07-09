@@ -16,12 +16,15 @@ import { View,
 
 
 const EditProfile = (props)=>{
-    const { requests } = useContext(Context)
-    const [nome, setNome] = useState('')
-    const [email, setEmail] = useState('')
-    const [servico, setServico] = useState('')
-    const [responsavel, setResponsavel] = useState('')
-    const [mesas, setMesas] = useState('')
+    const { states, requests } = useContext(Context)
+    const place = states.place
+    const [nome, setNome] = useState(place.nome)
+    const [email, setEmail] = useState(place.email)
+    const [servico, setServico] = useState(place.servico)
+    const [responsavel, setResponsavel] = useState(place.responsavel)
+    const [mesas, setMesas] = useState(String(place.mesas))
+    const [endereco, setEndereco] = useState(place.endereco)
+    const [contato, setContato] = useState(String(place.contato))
 
 
 
@@ -32,11 +35,13 @@ const EditProfile = (props)=>{
             email,
             servico,
             responsavel,
-            mesas
+            mesas,
+            endereco,
+            contato
         }
         axios.put(`${url}/client/${id}`, body).then(res=>{
-            props.navigation.navigate('Profile')
             requests.getPlace()
+            props.navigation.navigate('Profile')
         }).catch(e=>{
             alert(e.response.data)
         })
@@ -61,11 +66,11 @@ const EditProfile = (props)=>{
 
 
     const limpar = ()=>{
-        setConfSenha('')
+        setEndereco('')
         setEmail('')
         setNome('')
         setResponsavel('')
-        setSenha('')
+        setContato('')
         setServico('')
         setMesas('')
     }
@@ -121,6 +126,16 @@ const EditProfile = (props)=>{
                         onChangeText={setEmail}
                         value={email}
                         placeholder="nome@email.com"
+                        placeholderTextColor='whitesmoke'/>
+                    <TextInput style={styles.input}
+                        onChangeText={setEndereco}
+                        value={endereco}
+                        placeholder="Rua/Av Nº, Bairro-Cidade"
+                        placeholderTextColor='whitesmoke'/>
+                    <TextInput style={styles.input}
+                        onChangeText={setContato}
+                        value={contato}
+                        placeholder="DDD e Telefone"
                         placeholderTextColor='whitesmoke'/>
                     <TextInput style={styles.input}
                         onChangeText={setServico}

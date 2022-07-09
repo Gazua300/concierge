@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import Eye from 'react-native-vector-icons/Entypo'
 import { url } from '../../constants/url'
 import Context from "../../global/Context"
 import axios from 'axios'
@@ -16,7 +17,7 @@ import {
 
 
 const Login = (props)=>{
-    const { setters } = useContext(Context)
+    const { states, setters } = useContext(Context)
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
@@ -35,6 +36,7 @@ const Login = (props)=>{
     }, [])
 
 
+    
     const login = ()=>{
         const body = {
             email,
@@ -64,16 +66,19 @@ const Login = (props)=>{
                     <TextInput style={styles.input}
                         onChangeText={setEmail}
                         value={email}
-                        placeholderTextColor='whitesmoke'
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'
                         placeholder="nome@email.com"/>
 
                     <TextInput style={styles.input}
                         onChangeText={setSenha}
                         value={senha}
-                        placeholderTextColor='whitesmoke'
-                        secureTextEntry={true}
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'
+                        secureTextEntry={states.visivel}
                         placeholder='Sua senha'/>
-                    
+                    <TouchableOpacity style={styles.eye}
+                        onPress={setters.visibilidade}>
+                        <Eye name={states.icone} size={25} color='whitesmoke'/>                    
+                    </TouchableOpacity>
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
                             onPress={login}>
@@ -117,6 +122,11 @@ const styles = StyleSheet.create({
         width: 350,
         height: 50,
         color: 'whitesmoke'
+    },
+    eye: {
+        position: 'absolute',
+        right: '10%',
+        top: '43%'
     },
     txtStyle:{
         fontSize: 20,

@@ -12,8 +12,33 @@ export const GlobalState = (props)=>{
     const [clientes, setClientes] = useState([])    
     const [itens, setItens] = useState([])
     const [show, setShow] = useState(false)
+    const [icone, setIcone] = useState('eye-with-line')
+    const [icone2, setIcone2] = useState('eye-with-line')
+    const [visivel, setVisivel] = useState(true)
+    const [visivel2, setVisivel2] = useState(true)
 
     
+    
+    const visibilidade = ()=>{
+        if(icone === 'eye-with-line'){
+            setVisivel(false)
+            setIcone('eye')
+        }else if(icone === 'eye'){
+            setVisivel(true)
+            setIcone('eye-with-line')
+        }
+    }
+
+    const visibilidade2 = ()=>{
+        if(icone2 === 'eye-with-line'){
+            setVisivel2(false)
+            setIcone2('eye')
+        }else if(icone2 === 'eye'){
+            setVisivel2(true)
+            setIcone2('eye-with-line')
+        }
+    }
+
 
     const getToken = async(tk)=>{
         try{
@@ -67,8 +92,9 @@ export const GlobalState = (props)=>{
 
 
 
-    const states = { clientes, itens, place, show }
-    const setters = { getToken, setShow }
+    const states = { clientes, itens, place, show, visivel, icone,
+                    visivel2, icone2 }
+    const setters = { getToken, setShow, visibilidade, visibilidade2 }
     const requests = { clientsByPlace, produtos, deletePedido, getPlace }
 
     return(

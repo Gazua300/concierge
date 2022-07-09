@@ -1,19 +1,21 @@
 import { useContext, useState } from "react"
 import Context from "../../global/Context"
+import Eye from 'react-native-vector-icons/Entypo'
 import axios from 'axios'
 import { url } from "../../constants/url"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, ScrollView } from "react-native"
 
 
 const CreateClient = (props)=>{
-    const { setters } = useContext(Context)
+    const { states, setters } = useContext(Context)
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [confSenha, setConfSenha] = useState('')
     const [servico, setServico] = useState('')
     const [responsavel, setResponsavel] = useState('')
-    const [mesas, setMesas] = useState('')
+    const [mesas, setMesas] = useState('')    
+
 
 
 
@@ -60,45 +62,53 @@ const CreateClient = (props)=>{
                         onChangeText={setNome}
                         value={nome}
                         placeholder="Nome"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
                     <TextInput style={styles.input}
                         onChangeText={setEmail}
                         value={email}
                         placeholder="nome@email.com"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
 
                     <TextInput style={styles.input}
                         onChangeText={setSenha}
                         value={senha}
-                        secureTextEntry={true}
+                        secureTextEntry={states.visivel}
                         placeholder='Sua senha'
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
+                    <TouchableOpacity style={styles.eye}
+                        onPress={setters.visibilidade}>
+                        <Eye name={states.icone} size={25} color='whitesmoke'/>
+                    </TouchableOpacity>
                     
                     <TextInput style={styles.input}
                         onChangeText={setConfSenha}
                         value={confSenha}
-                        secureTextEntry={true}
+                        secureTextEntry={states.visivel2}
                         placeholder='Confirme sua senha'
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
+                    <TouchableOpacity style={styles.eye2}
+                        onPress={setters.visibilidade2}>
+                        <Eye name={states.icone2} size={25} color='whitesmoke'/>
+                    </TouchableOpacity>
 
                     <TextInput style={styles.input}
                         onChangeText={setServico}
                         value={servico}
                         placeholder="Serviço oferecido"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
 
                     <TextInput style={styles.input}
                         onChangeText={setMesas}
                         value={mesas}
                         placeholder='Contingência'
-                        placeholderTextColor='whitesmoke'
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'
                         keyboardType="numeric"/>
 
                     <TextInput style={styles.input}
                         onChangeText={setResponsavel}
                         value={responsavel}
                         placeholder="Nome do responsável"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
                     
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
@@ -134,6 +144,16 @@ const styles = StyleSheet.create({
         width: 350,
         height: 50,
         color: 'whitesmoke'
+    },
+    eye: {
+        position: 'absolute',
+        right: '8%',
+        top: '29.5%'
+    },
+    eye2: {
+        position: 'absolute',
+        right: '8%',
+        top: '42%'
     },
     btnContainer: {
         display: 'flex',
