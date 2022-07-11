@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import Context from '../../global/Context'
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 
@@ -6,7 +6,7 @@ import { ScrollView, View, Text, StyleSheet, TouchableOpacity, ImageBackground, 
 
 
 const Home = (props)=>{
-    const { requests, states, setters } = useContext(Context)
+    const { requests, states } = useContext(Context)
     const clientes = states.clientes
 
 
@@ -15,7 +15,7 @@ const Home = (props)=>{
     }, [])
 
 
-
+    
     const remover = (id)=>{
         Alert.alert(
             'Alerta',
@@ -51,9 +51,6 @@ const Home = (props)=>{
                                         {cliente.pedido}{'\n'}
                                         Mesa {cliente.mesa}
                                     </Text>
-                                    {/* <Text style={{fontSize:18, marginTop:10, color:'whitesmoke'}}>
-                                        Feito as {cliente.ordem}
-                                    </Text> */}
                                 </View>                                 
                                 <TouchableOpacity style={styles.button}
                                     onPress={()=> remover(cliente.id)}>

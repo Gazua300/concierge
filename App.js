@@ -13,6 +13,7 @@ import Produtos from "./src/pages/produtos/Produtos"
 import Profile from './src/pages/profile/Profile'
 import EditProfile from "./src/pages/editProfile/EditProfile"
 import Auth from "./src/pages/auth/Auth"
+import RedefinirSenha from "./src/pages/redefinirSenha/RedefinirSenha"
 
 
 
@@ -109,6 +110,13 @@ export default function App() {
           component={Auth}
           options={({navigation})=>({
             title: 'Autenticação'
+          })} />
+        
+        <Stack.Screen
+          name="RedefinirSenha"
+          component={RedefinirSenha}
+          options={({navigation})=>({
+            title: 'Redefinição de senha'
           })} />
 
         </Stack.Navigator>

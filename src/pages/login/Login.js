@@ -16,10 +16,14 @@ import {
 
 
 
+
 const Login = (props)=>{
     const { states, setters } = useContext(Context)
+    const placeholderBackground = 'rgba(255, 255, 255, 0.4)'
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
+    const [visivel, setVisivel] = useState(true)
+    const [icone, setIcone] = useState('eye-with-line')
 
 
     
@@ -51,6 +55,18 @@ const Login = (props)=>{
     }
 
 
+    const visibilidade = ()=>{
+        if(icone === 'eye-with-line'){
+            setVisivel(false)
+            setIcone('eye')
+        }else if(icone === 'eye'){
+            setVisivel(true)
+            setIcone('eye-with-line')
+        }
+    }
+
+
+
     const limpar = ()=>{
         setEmail('')
         setSenha('')
@@ -62,43 +78,47 @@ const Login = (props)=>{
             style={{flex:1}}
             source={require('../../img/login-wallpaper.jpg')}>
             <View style={styles.container}>
-                <ScrollView>
-                    <TextInput style={styles.input}
-                        onChangeText={setEmail}
-                        value={email}
-                        placeholderTextColor='rgba(255, 255, 255, 0.4)'
-                        placeholder="nome@email.com"/>
+                <TextInput style={styles.input}
+                    onChangeText={setEmail}
+                    value={email}
+                    placeholderTextColor={placeholderBackground}
+                    placeholder="nome@email.com"/>
 
-                    <TextInput style={styles.input}
-                        onChangeText={setSenha}
-                        value={senha}
-                        placeholderTextColor='rgba(255, 255, 255, 0.4)'
-                        secureTextEntry={states.visivel}
-                        placeholder='Sua senha'/>
-                    <TouchableOpacity style={styles.eye}
-                        onPress={setters.visibilidade}>
-                        <Eye name={states.icone} size={25} color='whitesmoke'/>                    
-                    </TouchableOpacity>
-                    <View style={styles.btnContainer}>
-                        <TouchableOpacity style={styles.button}
-                            onPress={login}>
-                            <Text style={{color:'whitesmoke', fontSize:20}}>
-                                Entrar
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}
-                            onPress={limpar}>
-                            <Text style={{color:'whitesmoke', fontSize:20}}>
-                                Limpar
-                            </Text>
-                        </TouchableOpacity>                    
-                    </View>
-                    
-                    <Text style={styles.txtStyle}>Ainda não tem cadastro? Clique
-                        <Text style={{color:'blue', fontSize:20}}
-                            onPress={()=> props.navigation.navigate('CreateClient')}> aqui</Text>
+                <TextInput style={styles.input}
+                    onChangeText={setSenha}
+                    value={senha}
+                    placeholderTextColor={placeholderBackground}
+                    secureTextEntry={visivel}
+                    placeholder='Sua senha'/>
+                <TouchableOpacity style={styles.eye}
+                    onPress={visibilidade}>
+                    <Eye name={icone} size={25} color='whitesmoke'/>                    
+                </TouchableOpacity>
+                <TouchableOpacity style={{alignItems:'center'}}
+                    onPress={()=> props.navigation.navigate('RedefinirSenha')}>
+                    <Text style={{color:'blue', fontSize:18}}>
+                        Esqueceu sua senha
                     </Text>
-                </ScrollView>
+                </TouchableOpacity>
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.button}
+                        onPress={limpar}>
+                        <Text style={{color:'whitesmoke', fontSize:20}}>
+                            Limpar
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button}
+                        onPress={login}>
+                        <Text style={{color:'whitesmoke', fontSize:20}}>
+                            Entrar
+                        </Text>
+                    </TouchableOpacity>                    
+                </View>
+                
+                <Text style={styles.txtStyle}>Ainda não tem cadastro? Clique
+                    <Text style={{color:'blue', fontSize:20}}
+                        onPress={()=> props.navigation.navigate('CreateClient')}> aqui</Text>
+                </Text>
             </View>
         </ImageBackground>
     )
@@ -125,8 +145,8 @@ const styles = StyleSheet.create({
     },
     eye: {
         position: 'absolute',
-        right: '10%',
-        top: '43%'
+        left: '82%',
+        top: '41%'
     },
     txtStyle:{
         fontSize: 20,

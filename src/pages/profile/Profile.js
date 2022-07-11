@@ -1,7 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import Context from '../../global/Context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert } from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    TouchableOpacity, Alert } from 'react-native'
 
 
 
@@ -12,12 +17,14 @@ const Profile = (props)=>{
     const ddd = String(place.contato).substring(0,2)
     const prefixo = String(place.contato).substring(2,6)
     const sufixo = String(place.contato).substring(6,10)
-    const telefone = `(${ddd}) ${prefixo}-${sufixo}`
+    const telefone = `${ddd} ${prefixo}-${sufixo}`
 
+    
 
     useEffect(()=>{
         requests.getPlace()
     }, [])
+    
 
 
     const sair = async()=>{

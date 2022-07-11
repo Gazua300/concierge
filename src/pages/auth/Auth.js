@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import Context from '../../global/Context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Eye from 'react-native-vector-icons/Entypo'
 import axios from 'axios'
 import { url } from '../../constants/url'
 import { View,
@@ -42,9 +43,13 @@ const Auth = (props)=>{
                 <TextInput style={styles.input}
                     onChangeText={setSenha}
                     value={senha}
-                    secureTextEntry={true}
+                    secureTextEntry={states.visivel}
                     placeholder='Sua senha'
-                    placeholderTextColor='whitesmoke'/>
+                    placeholderTextColor='rgba(255, 255, 255, 0.4)'/>
+                <TouchableOpacity style={styles.eye}
+                    onPress={setters.visibilidade}>
+                    <Eye name={states.icone} size={25} color='whitesmoke'/>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.button}
                     onPress={auth}>
                     <Text style={{color:'whitesmoke', fontSize:18}}>Verificar</Text>
@@ -77,6 +82,11 @@ const styles = StyleSheet.create({
         height: 50,
         color: 'whitesmoke',
         marginTop: 20
+    },
+    eye: {
+        position: 'absolute',
+        right: '4%',
+        top: '53.5%'
     },
     button: {
         backgroundColor: '#ae8625',

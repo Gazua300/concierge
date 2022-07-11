@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import Context from '../../global/Context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useBackHandler } from '@react-native-community/hooks'
 import axios from 'axios'
 import { url } from '../../constants/url'
 import { View,
@@ -10,7 +11,7 @@ import { View,
     Alert,
     ScrollView,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native'
 
 
@@ -18,6 +19,7 @@ import { View,
 const EditProfile = (props)=>{
     const { states, requests } = useContext(Context)
     const place = states.place
+    const placeholderBackground = 'rgba(255, 255, 255, 0.4)'
     const [nome, setNome] = useState(place.nome)
     const [email, setEmail] = useState(place.email)
     const [servico, setServico] = useState(place.servico)
@@ -25,6 +27,15 @@ const EditProfile = (props)=>{
     const [mesas, setMesas] = useState(String(place.mesas))
     const [endereco, setEndereco] = useState(place.endereco)
     const [contato, setContato] = useState(String(place.contato))
+
+
+    
+    useBackHandler(()=>{
+        props.navigation.navigate('Profile')
+        
+        return true
+    })
+
 
 
 
@@ -121,38 +132,38 @@ const EditProfile = (props)=>{
                         onChangeText={setNome}
                         value={nome}
                         placeholder="Nome"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor={placeholderBackground}/>
                     <TextInput style={styles.input}
                         onChangeText={setEmail}
                         value={email}
                         placeholder="nome@email.com"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor={placeholderBackground}/>
                     <TextInput style={styles.input}
                         onChangeText={setEndereco}
                         value={endereco}
                         placeholder="Rua/Av Nº, Bairro-Cidade"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor={placeholderBackground}/>
                     <TextInput style={styles.input}
                         onChangeText={setContato}
                         value={contato}
                         placeholder="DDD e Telefone"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor={placeholderBackground}/>
                     <TextInput style={styles.input}
                         onChangeText={setServico}
                         value={servico}
                         placeholder="Serviço oferecido"
-                        placeholderTextColor='whitesmoke'/>
+                        placeholderTextColor={placeholderBackground}/>
                     <TextInput style={styles.input}
                         onChangeText={setMesas}
                         value={mesas}
                         placeholder='Contingência'
-                        placeholderTextColor='whitesmoke'
+                        placeholderTextColor={placeholderBackground}
                         keyboardType="numeric"/>
                     <TextInput style={styles.input}
                         onChangeText={setResponsavel}
                         value={responsavel}
                         placeholder="Nome do responsável"
-                        placeholderTextColor='whitesmoke'/>                    
+                        placeholderTextColor={placeholderBackground}/>                    
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
                             onPress={confirmar}>

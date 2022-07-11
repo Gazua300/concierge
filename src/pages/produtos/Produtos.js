@@ -17,7 +17,7 @@ import { url } from "../../constants/url"
 
 const Produtos = (props)=>{
     const [nome, setNome] = useState('')
-    const [ingrediente, setIngrediente] = useState('')
+    const [preco, setPreco] = useState('')
     const { states, requests } = useContext(Context)
     const itens = states.itens
 
@@ -32,7 +32,7 @@ const Produtos = (props)=>{
 
         const body = {
             nome,
-            ingredientes: ingrediente
+            preco
         }
         axios.post(`${url}/cardapio/${id}`, body).then(res=>{
             alert(res.data)
@@ -45,7 +45,7 @@ const Produtos = (props)=>{
 
     const limpar = ()=>{
         setNome('')
-        setIngrediente('')
+        setPreco('')
     }
 
 
@@ -81,27 +81,29 @@ const Produtos = (props)=>{
             <View style={styles.container}>
                 <Text style={styles.title}>Inserir Produto</Text>
                 
-                <View style={styles.inputContainer}>            
-                    <TextInput style={styles.input}
-                        onChangeText={setNome}
-                        value={nome}
-                        placeholder='Produto'
-                        placeholderTextColor='whitesmoke'/>            
-                    <TextInput style={styles.textarea}
-                        onChangeText={setIngrediente}
-                        value={ingrediente}
-                        multiline={true}
-                        placeholder='Ingredientes, variedades ou marcas'
-                        placeholderTextColor='whitesmoke'/>
+                <View style={styles.formContainer}>            
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.input}
+                            onChangeText={setNome}
+                            value={nome}
+                            placeholder='Produto'
+                            placeholderTextColor='rgba(255, 255, 255, 0.4)'/>            
+                        <TextInput style={styles.inputPreco}
+                            onChangeText={setPreco}
+                            value={preco}
+                            keyboardType='numeric'
+                            placeholder='R$ 0,00'
+                            placeholderTextColor='rgba(255, 255, 255,0.4)'/>
+                    </View>
                                     
                     <View style={styles.btnContainer}>
                         <TouchableOpacity style={styles.button}
-                            onPress={inserirProduto}>
-                            <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}
                             onPress={limpar}>
                             <Text style={{color:'whitesmoke', fontSize:15}}>Limpar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}
+                            onPress={inserirProduto}>
+                            <Text style={{color:'whitesmoke', fontSize:15}}>Registrar</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -118,8 +120,10 @@ const Produtos = (props)=>{
                         return(
                             <View key={item.id}
                                 style={styles.card}>
-                                <Text style={styles.txtStyle}>{item.nome}</Text>
-                                <Text style={{fontSize:15, color:'whitesmoke'}}>{item.ingredientes}</Text>
+                                <View style={styles.txtContainer}>
+                                    <Text style={styles.txtStyle}>{item.nome}</Text>
+                                    <Text style={styles.txtStyle}>R$ {item.preco}</Text>
+                                </View>
                                 <TouchableOpacity style={styles.remove}
                                     onPress={()=> removeConf(item.id)}>
                                     <Text style={{fontSize:15, color:'whitesmoke'}}>
@@ -147,9 +151,15 @@ const styles = StyleSheet.create({
         margin: 20,
         color:'whitesmoke'
     },
-    inputContainer: {
+    formContainer: {
         alignItems: 'center',
         marginBottom: 30
+    },
+    inputContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 30
     },
     input: {
         color: 'whitesmoke',
@@ -158,20 +168,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         fontSize: 20,
-        width: 350,
+        width: 200,
         height: 50,
-        marginBottom: 10
+        marginRight: 27
     },
-    textarea: {
+    inputPreco: {
         color: 'whitesmoke',
         borderWidth: 1,
         borderColor: '#ae8625',
         borderRadius: 10,
         padding: 10,
         fontSize: 20,
-        width: 350,
-        height: 90,
-        marginBottom: 20
+        height: 50,
+        marginLeft: 27
     },
     card: {
         display: 'flex',
@@ -182,6 +191,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
         borderColor: '#ae8625'
+    },
+    txtContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     txtStyle: {
         fontSize: 20,
